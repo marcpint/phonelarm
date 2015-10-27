@@ -1,0 +1,25 @@
+<ion-view>
+  <ion-nav-title><b class="icon ion-ios-cart"> Movimiento Sospechoso</b></ion-nav-title>
+  <ion-content>
+    <ion-list>
+      <div class="list card">
+
+	  <label class="item item-input">
+    		<textarea placeholder="Observaciones" ng-model="datos.txt"></textarea>
+  	  </label>
+	  <label class="item item-input item-select">
+	    <div class="input-label">
+	      Destinatario
+	    </div>
+	    <select>
+	      <option selected>Todos</option>
+	      <option ng-repeat="item in respuestaAjax" value="{{item.us_id}}">{{item.us_nombre}}</option>
+	    </select>
+	  </label>
+      </div>  
+	<button class="button button-full button-positive" id="lnkEnviaAlerta" ng-click="enviarSospecha()">
+	  Enviar alerta
+	</button>       
+    </ion-list>
+  </ion-content>
+</ion-view>

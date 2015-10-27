@@ -1,0 +1,22 @@
+<ion-view>
+  <ion-nav-title><b class="icon ion-mic-a"> PhoneLarm</b></ion-nav-title>
+  <ion-content>
+    <ion-list>
+      <div class="list card">
+
+	  <label class="item item-input">
+    		<textarea placeholder="Observaciones" ng-model="datos.txt"></textarea>
+  	  </label>
+	  <label class="item item-input item-select">
+	    <div class="input-label">
+	      Grupo
+	    </div>
+	    <select>
+	      <option selected value="0">Seleccione</option>
+	      <option ng-repeat="item in respuestaAjaxGrupos" value="{{item.gr_id}}">{{item.gr_desc}}</option>
+	    </select>
+	  </label>
+      </div> 
+    </ion-list>
+  </ion-content>
+</ion-view>       

@@ -1,0 +1,125 @@
+app.service('Ajax',function($http,$ionicLoading){
+	   this.buscarGrupos = function(callback){
+		   
+		   $ionicLoading.show({
+			   template: '<i class="icon ion-loading-a"></i> Cargando...'
+		   });
+		   
+		   $http.get('http://vavlws-marcpint.rhcloud.com/svrsc_usr.php?ac=grupos&us=1744').
+		   success(function(data, status, headers, config) {
+		    // this callback will be called asynchronously
+		    // when the response is available	 
+			 $ionicLoading.hide();
+			 callback(data);
+		   }).
+		   error(function(data, status, headers, config) {
+		    // called asynchronously if an error occurs
+		    // or server returns response with an error status.
+			
+		    $ionicLoading.hide();
+		   }); 		   
+	   }
+
+	   this.sospechaCargarContactos = function(callback){
+	   	   $ionicLoading.show({
+	   	       template: '<i class="icon ion-loading-a"></i> Cargando...'
+		   });
+		   $http.get('http://vavlws-marcpint.rhcloud.com/svrsc_usr.php?ac=usuarios_grupo&gr=1').
+		   success(function(data, status, headers, config) {
+		    // this callback will be called asynchronously
+		    // when the response is available	 
+			 $ionicLoading.hide();
+			 callback(data);
+		   }).
+		   error(function(data, status, headers, config) {
+		    // called asynchronously if an error occurs
+		    // or server returns response with an error status.
+		    $ionicLoading.hide();
+		   }); 
+	   }
+	   this.enviaSospecha = function(param, callback){
+	   	   $ionicLoading.show({
+	   	       template: '<i class="icon ion-loading-a"></i> Enviando...'
+		   });
+		   $http.get('http://vavlws-marcpint.rhcloud.com/svrsc.php?a=1&obs='+param).
+		   success(function(data, status, headers, config) {
+		    // this callback will be called asynchronously
+		    // when the response is available	 
+			 $ionicLoading.hide();
+			 callback(data);
+		   }).
+		   error(function(data, status, headers, config) {
+		    // called asynchronously if an error occurs
+		    // or server returns response with an error status.
+		    $ionicLoading.hide();
+		   }); 
+	   }
+});
+
+
+app.controller('sospecha', function($scope, Ajax) {
+ 		 $scope.datos = {
+ 		 	 txt:''
+ 		 }
+		 
+		 Ajax.sospechaCargarContactos(function(response){
+		 		 $scope.respuestaAjax = response;
+		 });
+		 
+		 $scope.enviarSospecha = function(){
+		 	 if($scope.datos.txt==""){
+		 	 	 alert("Nope");
+		 	 }else{
+				 Ajax.enviaSospecha($scope.datos.txt, function(response){
+						 alert("Enviado");
+				 });
+		 	 }
+		 	 
+		 }
+	 
+		 
+	 }		
+ );
+ 
+
+ app.controller('grupos', function($scope,$ionicLoading, Ajax) {
+	     //openFB.init('934167536618028'); // Defaults to sessionStorage for storing the Facebook token
+	     /*
+	     openFB.init('934167536618028', 'http://localhost/openfb/oauthcallback.html', window.localStorage);
+	     login();
+	     function login() {
+	         openFB.login('email',
+	                 function() {
+	                     alert('Facebook login succeeded');
+	                 },
+	                 function() {
+	                     alert('Facebook login failed');
+	                 });
+	     }
+	     */  
+		 $scope.datos = {
+		 	 txt:''
+		 }
+		 $ionicLoading.show({
+	      template: '<i class="icon ion-loading-a"></i> Buscando grupos...'
+	     });
+		 
+		 Ajax.buscarGrupos(function(response){  
+		 		 $scope.respuestaAjaxGrupos = response;
+		 });
+	     
+		 $scope.enviarSospecha = function(){
+		 	 if($scope.datos.txt==""){
+		 	 	 alert("Nope");
+		 	 }else{
+				 Ajax.enviaSospecha($scope.datos.txt, function(response){
+						 alert("Enviado");
+				 });
+		 	 }
+		 	 
+		 }
+
+	 
+ });
+ 
+ 
