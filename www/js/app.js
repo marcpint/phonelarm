@@ -18,7 +18,7 @@ var app = angular.module('starter', ['ionic'])
     
     window.plugins.googleplus.login(
     	    {
-    	      'iOSApiKey': '1077293768213-8unnin1ulmi0vv5vi1434av200rrv5ra.apps.googleusercontent.com'
+    	      'iOSApiKey': ''
     	      // there is no API key for Android; you app is wired to the Google+ API by listing your package name in the google dev console and signing your apk (which you have done in chapter 4)
     	    },
     	    function (obj) {
